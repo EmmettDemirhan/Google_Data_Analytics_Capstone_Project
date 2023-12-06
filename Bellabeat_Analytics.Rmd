@@ -246,42 +246,19 @@ weight_log_info <- convert_and_rename_datetime_to_date(weight_log_info, "date")
 
 ##### Removing duplicate inputs from sleep_day 
 ```{r duplicates,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
-# Check for duplicates in sleepDay
-duplicates <- sleep_day %>% 
-  group_by(id, date) %>% 
-  summarize(count = n(), .groups = 'keep') %>% 
-  filter(count > 1)
-
-# View duplicate records
-print(duplicates)
-
-# Inspect the detailed rows for each duplicate entry
-inspect_duplicates <- function(df, id, date) {
-  df %>% 
-    filter(id == id & date == date)
-}
-
-# Example: Inspect duplicates for the first identified duplicate
-inspect_duplicates(sleep_day, 4388161847, as.Date("2016-05-05"))
-
-# Repeat for each duplicate identified
-inspect_duplicates(sleep_day, 4702921684, as.Date("2016-05-07"))
-inspect_duplicates(sleep_day, 8378563200, as.Date("2016-04-25"))
-
-# Remove duplicate entries
-sleep_day <- sleep_day %>% 
-  distinct(id, date, .keep_all = TRUE)
-
-# Check if duplicates are removed
-duplicates_post_cleaning <- sleep_day %>% 
-  group_by(id, date) %>% 
-  summarize(count = n(), .groups = 'keep') %>% 
-  filter(count > 1)
-
-# View to confirm no duplicates
-print(duplicates_post_cleaning)
+# Check for duplicates 
+sum(duplicated(daily_activity))
+sum(duplicated(weight_log_info))
+sum(duplicated(sleep_day))
+sum(duplicated(daily_calories))
+sum(duplicated(daily_intensities))
+sum(duplicated(daily_steps))
 ```
-
+```{r removing duplicates,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Remove duplicate entries
+sleep_day <- unique(sleep_day)
+sum(duplicated(sleep_day))
+```
 
 ```{r scatter plot 1, echo=FALSE, height= 4, width= 4, message=FALSE, warning=FALSE}
 # Create a scatter plot to see difference between tracker_distance and total_distance
