@@ -244,6 +244,21 @@ sleep_day <- convert_and_rename_datetime_to_date(sleep_day, "sleep_day")
 weight_log_info <- convert_and_rename_datetime_to_date(weight_log_info, "date")
 ```
 
+#### Checking Unique IDs
+
+```{r Unique id,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Checking Unique IDs
+n_distinct(daily_activity$id) 
+n_distinct(weight_log_info$id) 
+n_distinct(sleep_day$id) 
+n_distinct(daily_calories$id)
+n_distinct(daily_intensities$id) 
+n_distinct(daily_steps$id)
+```
+
+
+
+
 ##### Removing duplicate inputs from sleep_day 
 ```{r duplicates,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
 # Check for duplicates 
