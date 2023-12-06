@@ -1,0 +1,662 @@
+---
+title: "Analysis of Smart Device Usage for Strategic Marketing Insights at Bellabeat"
+author: "Emmett Demirhan"
+date: "2023-12-06"
+output:
+  html_document: null
+  word_document: default
+---
+```{css, echo=FALSE}
+.subtitle {
+  text-align: center;
+}
+
+```{css echo=FALSE}
+.title, .author, .date {
+  text-align: center;
+}
+```
+## Executive Summary
+
+This analysis presents strategic insights into smart device usage for Bellabeat, a high-tech producer of health-focused products for women. Leveraging data from Fitbit fitness trackers, the study aimed to understand user behaviors in physical activity, sleep monitoring, and heart rate trends to enhance Bellabeat's marketing strategies.
+
+Key findings indicate that users exhibit significant variability in physical activity, with an average step count of 7,638 steps per day and a considerable standard deviation, suggesting a wide range of individual activity levels. Moreover, sleep data analysis uncovered varying patterns, particularly less sleep on Tuesdays and Thursdays. Sedentary behavior was notably predominant, with users averaging over 16 hours of inactivity, stressing the need for features that encourage movement. Additionally, a positive linear relationship was found between total steps and calories burned, underscoring the importance of regular physical activity for energy expenditure and weight management.
+
+The strategic recommendations for Bellabeat based on this analysis include developing personalized sleep insights, sedentary behavior alerts, and wellness content targeting less active days. Furthermore, expanding data collection to include demographic information would enable more targeted marketing strategies.
+
+The implementation of these insights could be done through product development, marketing campaigns, and customer engagement initiatives that align with the identified user behaviors. Continuous monitoring of strategy effectiveness and data-driven adjustments are essential for sustained impact.
+
+In conclusion, while the dataset provides valuable insights, it is limited by its size, scope, and the fact that it is somewhat dated. To maximize the efficacy of the derived strategies, Bellabeat is advised to invest in more comprehensive and current data collection, including demographic details, to ensure that the insights and recommendations are reflective of its target market's behaviors and needs.
+
+
+##  Business Task Overview
+
+#### Objective:
+
+The primary objective of this analysis is to provide Bellabeat, a high-tech manufacturer of health-focused products for women, with actionable insights derived from the analysis of smart device usage data. This analysis is aimed at informing and enhancing the company's marketing strategies.
+
+#### Background:
+
+Bellabeat, established in 2013, has been at the forefront of developing innovative, health-focused smart products designed specifically for women. With a range of products including the Bellabeat app, Leaf, Time, and Spring, the company has made significant strides in integrating technology with wellness. However, to keep pace with the dynamic smart device market and to capitalize on potential growth opportunities, a deeper understanding of consumer behavior and device usage is essential.
+
+#### Problem Statement:
+
+Despite Bellabeat's success in creating aesthetically pleasing and functional wellness products, there is a need to understand the broader trends in smart device usage. This understanding is crucial to tailor Bellabeat's marketing strategies effectively, ensuring they resonate with the target audience's habits and preferences.
+
+#### Significance:
+
+By analyzing existing smart device usage data, specifically from non-Bellabeat products like Fitbit, I aim to uncover trends and patterns that can inform Bellabeat's marketing strategies. This analysis will help Bellabeat to align its products with consumer needs, preferences, and lifestyle choices, thereby enhancing customer engagement and market share.
+
+#### Approach:
+
+My approach involves a detailed analysis of the FitBit Fitness Tracker Data to explore user habits in areas such as physical activity, heart rate monitoring, and sleep patterns. This data, though external, provides a valuable proxy to understand potential behaviors and preferences of Bellabeat's current and prospective customer base.
+
+
+
+##  Ask
+
+#### Analysis Goals:
+
+In this phase of the analysis, the goal is to identify and clarify the key questions that will drive the data exploration and analysis. These questions are designed to uncover insights into smart device usage trends that are applicable and beneficial to Bellabeat's marketing strategy and product development.
+
+#### Key Questions:
+
+1. **Trend Analysis**: What are the prevailing trends in smart device usage, especially in areas relevant to Bellabeat’s products (such as activity tracking, sleep monitoring, and stress management)?
+
+2. **Consumer Behavior**: How do these trends reflect the behaviors and preferences of potential Bellabeat customers?
+
+3. **Strategic Application**: How can these identified trends be leveraged to enhance Bellabeat's marketing strategies and product offerings?
+
+4. **Market Opportunities**: Are there unexplored areas in the smart device market that Bellabeat can capitalize on, based on the trends and patterns observed in the data?
+
+5. **Competitive Advantage**: How do Bellabeat's products compare with non-Bellabeat smart devices in terms of features and user engagement? What unique value propositions could Bellabeat offer to stand out in the market?
+
+#### Approach to Addressing the Questions:
+
+To address these questions, a systematic approach will be taken to explore the FitBit Fitness Tracker Data. This will involve:
+
+- **Data Exploration**: Examining the dataset to understand its structure, content, and quality.
+- **Data Analysis**: Conducting both descriptive and inferential statistical analyses to uncover patterns and trends in the data.
+- **Comparative Analysis**: Comparing findings from the FitBit data with Bellabeat’s product features and market positioning.
+
+#### Expected Outcomes:
+
+The outcome of this phase will be a clear set of objectives for the data preparation, processing, and analysis stages. The insights gained from addressing these questions will directly inform the strategic marketing decisions and potential innovation areas for Bellabeat.
+
+#### Stakeholder Engagement:
+
+Throughout this phase, engagement with key stakeholders, including Bellabeat’s marketing team and product development unit, would be vital. Their input would ensure that the analysis remains aligned with the company’s business goals and market positioning strategies.
+
+
+##  Prepare
+
+#### Data Description and Storage
+
+##### Source and Licensing:
+The data for this analysis comes from the FitBit Fitness Tracker Data, provided under the CC0: Public Domain license by Möbius and available on [Kaggle](https://www.kaggle.com/datasets/arashnic/fitbit). This dataset comprises personal fitness tracker data from thirty Fitbit users, including minute-level output for physical activity, heart rate, and sleep monitoring.
+
+##### Storage:
+The dataset consists of 18 CSV files, stored locally on my machine for ease of access and analysis. The files are organized in a dedicated directory, ensuring efficient management and retrieval during the analysis process.
+
+#### Data Organization and Structure
+
+The dataset is divided into 18 CSV files, each representing different aspects of the users' fitness and health data. These files include information on daily activity, steps, sleep patterns, heart rate, and more. The data is organized in a long format, which is ideal for time-series analysis and tracking individual user metrics over time.
+
+#### Data Credibility and Integrity
+
+##### ROCCC Analysis:
+
+- **Reliability**: With data from only 30 Fitbit users, there's a potential bias as this sample might not represent the broader population. Plans to augment this dataset with additional data sources should be considered to enhance its representativeness.
+- **Originality**: The data is sourced from a third-party (Möbius) and not directly from the service provider, which might affect its originality.
+- **Comprehensiveness**: The dataset lacks demographic information such as age, gender, and specific device types, which limits the comprehensiveness of our analysis.
+- **Currency**: The data was collected between December 3rd and 5th, 2016, which may impact its relevance to current market trends.
+- **Cited**: The dataset is properly cited and sourced from a reliable crowdsourcing platform.
+
+##### Addressing Limitations:
+
+To mitigate these limitations, particularly the issues of small sample size and lack of comprehensiveness, one plan to:
+- Explore additional datasets that could complement and enhance this dataset.
+- Conduct a thorough exploratory data analysis to identify and understand any gaps or inconsistencies in the data.
+
+#### Data Privacy and Ethics
+
+The data was collected with the consent of the participants and is publicly available, respecting the privacy and ethical considerations of personal health data usage. However, it's essential to maintain this standard of privacy and ethics throughout the analysis process.
+
+#### Preliminary Data Check
+
+Before diving into detailed analysis, an initial check of the data’s integrity and structure will be performed. This involves:
+
+- Loading each CSV file into R to understand its structure and content.
+- Checking for missing values, outliers, and inconsistencies.
+- Summarizing the key features of each dataset to ensure a good understanding of the available data.
+
+
+
+
+## Process
+
+#### Data and Libraries Loading
+
+Here, I load each CSV file from the FitBit Fitness Tracker Data into R and conduct a preliminary examination.
+
+```{r load-data, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Load Libraries
+library('tidyverse')
+library('janitor')
+library('skimr')
+library('here')
+library('dplyr')
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(corrplot)
+library(knitr)
+library(viridis)
+library(GGally)
+
+# File names
+file_names <- c("dailyActivity_merged.csv", "dailyCalories_merged.csv", 
+                "dailyIntensities_merged.csv", "dailySteps_merged.csv", 
+                "heartrate_seconds_merged.csv", "hourlyCalories_merged.csv", 
+                "hourlyIntensities_merged.csv", "hourlySteps_merged.csv", 
+                "minuteCaloriesNarrow_merged.csv", "minuteCaloriesWide_merged.csv", 
+                "minuteMETsNarrow_merged.csv", "minuteSleep_merged.csv", 
+                "minuteStepsNarrow_merged.csv", "minuteStepsWide_merged.csv", 
+                "sleepDay_merged.csv", "weightLogInfo_merged.csv", 
+                "minuteIntensitiesNarrow_merged.csv", "minuteIntensitiesWide_merged.csv")
+
+# Function to clean dataset names
+clean_dataset_name <- function(name) {
+    name %>%
+    str_replace_all("([a-z])([A-Z])", "\\1_\\2") %>%  # Insert underscore before a capital letter
+    tolower() %>%  # Convert to lower case
+    str_replace_all("__", "_") %>%  # Replace double underscores with a single one
+    str_trim()  # Trim whitespace
+}
+
+# Loop to read each file, assign to a cleaned variable name, and store names in list
+datasets <- c()  # Initialize an empty vector to store cleaned dataset names
+for (file in file_names) {
+    var_name <- sub("\\_merged.csv$", "", file)  # Create variable name
+    cleaned_var_name <- clean_dataset_name(var_name)  # Clean the variable name
+    file_path <- paste0("Fitabase_Data/", file)  # File path
+    dataset <- read_csv(file_path) %>% clean_names()  # Read and clean column names
+    assign(cleaned_var_name, dataset)  # Assign cleaned dataset to cleaned variable name
+    datasets <- c(datasets, cleaned_var_name)  # Store cleaned dataset name
+}
+# datasets
+```
+
+#### Inspecting each dataset
+
+```{r first inspection,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Loop through each dataset, print its name, dimensions, and column names
+for (dataset in datasets) {
+  cat("\nDataset name:", dataset, "\n")
+  data <- get(dataset)
+  
+  # Display number of rows and columns
+  cat("Dimensions (Rows x Columns):", dim(data)[1], "x", dim(data)[2], "\n")
+  
+  # Display the names of the columns
+  cat("Column Names:", toString(names(data)), "\n")
+}
+```
+```{r Inspect, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# # Loop through each dataset, print its name and use glimpse to view its structure
+# for (dataset in datasets) {
+#   cat("\nDataset name:", dataset, "\n")
+#   get(dataset) %>% glimpse()
+# } 
+# it is too long to display so I commended this chuck after inspection
+```
+
+Interpreting the output, it's evident that the Fitbit dataset offers a comprehensive view of user activity, encompassing various aspects like daily activity levels, calorie consumption, sleep patterns, heart rate, and intensity of physical activities. The presence of both granular (minute-level) and aggregated (daily, hourly) data allows for a detailed examination of user behaviors. However, some datasets appear to be redundant, such as daily_activity overlapping with individual daily_calories, daily_steps, and daily_intensities, and similarly, minute_calories_narrow vs. minute_calories_wide. The weight_log_info dataset, although small, provides valuable insights into weight and BMI trends, which can be correlated with activity data for more in-depth analysis.
+
+From these datasets, valuable insights can be garnered to inform Bellabeat's marketing and product strategies. By analyzing daily activity patterns and calorie burn, we can understand the typical user's fitness routines and tailor marketing messages to fit these habits. The sleep data provides an avenue to explore how Bellabeat's products can enhance sleep quality and wellness routines. The minute-level data offer a rich source for understanding the intensity and duration of physical activities, potentially revealing when users are most active and how they engage with fitness. This granular analysis could guide the development of personalized features in Bellabeat products. Finally, examining the correlations between different datasets, like activity levels and weight changes, can reveal deeper behavioral insights, helping Bellabeat to position its products as effective tools for holistic health management.
+
+#### Data Cleaning and Manipulation
+
+##### Trasnforming the date columns
+```{r trasnforming the date columns, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Standardize and convert date columns to a consistent format
+convert_and_rename_date <- function(df, old_date_column, new_date_column = "date") {
+  df <- df %>% rename(!!new_date_column := !!old_date_column)  # Standardize the column name
+  df[[new_date_column]] <- mdy(df[[new_date_column]])  # Convert to date format
+  return(df)
+}
+
+# Applying the function to convert and rename date formats
+daily_activity <- convert_and_rename_date(daily_activity, "activity_date")
+daily_calories <- convert_and_rename_date(daily_calories, "activity_day")
+daily_intensities <- convert_and_rename_date(daily_intensities, "activity_day")
+daily_steps <- convert_and_rename_date(daily_steps, "activity_day")
+
+# Function to convert datetime columns to a consistent date format and standardize the name
+convert_and_rename_datetime_to_date <- function(df, old_datetime_column, new_date_column = "date") {
+  df <- df %>% rename(!!new_date_column := !!old_datetime_column)  # Standardize the column name
+  df[[new_date_column]] <- mdy(sub(" .*", "", df[[new_date_column]]))  # Convert datetime to date format
+  return(df)
+}
+
+# Applying the function to convert datetime to date formats and rename
+sleep_day <- convert_and_rename_datetime_to_date(sleep_day, "sleep_day")
+weight_log_info <- convert_and_rename_datetime_to_date(weight_log_info, "date")
+```
+
+##### Removing duplicate inputs from sleep_day 
+```{r duplicates,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Check for duplicates in sleepDay
+duplicates <- sleep_day %>% 
+  group_by(id, date) %>% 
+  summarize(count = n(), .groups = 'keep') %>% 
+  filter(count > 1)
+
+# View duplicate records
+print(duplicates)
+
+# Inspect the detailed rows for each duplicate entry
+inspect_duplicates <- function(df, id, date) {
+  df %>% 
+    filter(id == id & date == date)
+}
+
+# Example: Inspect duplicates for the first identified duplicate
+inspect_duplicates(sleep_day, 4388161847, as.Date("2016-05-05"))
+
+# Repeat for each duplicate identified
+inspect_duplicates(sleep_day, 4702921684, as.Date("2016-05-07"))
+inspect_duplicates(sleep_day, 8378563200, as.Date("2016-04-25"))
+
+# Remove duplicate entries
+sleep_day <- sleep_day %>% 
+  distinct(id, date, .keep_all = TRUE)
+
+# Check if duplicates are removed
+duplicates_post_cleaning <- sleep_day %>% 
+  group_by(id, date) %>% 
+  summarize(count = n(), .groups = 'keep') %>% 
+  filter(count > 1)
+
+# View to confirm no duplicates
+print(duplicates_post_cleaning)
+```
+
+
+```{r scatter plot 1, echo=FALSE, height= 4, width= 4, message=FALSE, warning=FALSE}
+# Create a scatter plot to see difference between tracker_distance and total_distance
+plot(daily_activity$tracker_distance, daily_activity$total_distance,
+     xlab = "Tracker Distance", ylab = "Total Distance",
+     main = "Scatter Plot of Total Steps vs. Total Distance")
+```
+
+In this context, it seems that there might be entries made by customers in addition to the data from the tracker devices. Therefore, we are using "Total Distance" instead of "Tracker Distance" to understand how the total distance correlates with the total number of steps taken. 
+
+```{r tracker, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Removing tracker_distance
+daily_activity <- daily_activity %>% select(-tracker_distance)
+glimpse(daily_activity)
+```
+
+##### Checking Missing Values
+
+```{r NAs ,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+# Loop through each dataset and check for missing values
+for (dataset in datasets) {
+  data <- get(dataset)
+  
+  # Calculate the sum of missing values for each column
+  missing_values <- sapply(data, function(x) sum(is.na(x)))
+  
+  # Filter out columns with no missing values
+  missing_values <- missing_values[missing_values > 0]
+  
+  # Check if there are any missing values in the dataset
+  if (length(missing_values) > 0) {
+    # Create a summary string for missing values
+    missing_summary_string <- paste("Dataset name:", dataset, "\n",
+                                    "Missing Values Summary:\n",
+                                    toString(sprintf("%s: %d", names(missing_values), missing_values)),
+                                    sep = "\n")
+
+    # Print the summary string
+    cat(missing_summary_string, "\n\n")
+  }
+}
+
+```
+The output indicates that in the weight_log_info dataset, the only column with missing values is the "fat" column, which has 65 missing entries. This suggests that for a significant number of entries in this dataset, the body fat percentage (or a similar metric represented by the fat column) was not recorded or is unavailable. When analyzing or drawing insights from this dataset, it's important to consider the impact of these missing values. No other columns in this dataset have missing values.
+
+
+
+## Analyse and Share Phase
+
+### Analysing Daily Activities Dataset
+
+```{r daily activities,echo=FALSE, message=FALSE, warning=FALSE}
+# Exclude 'id', 'date', and 'day_of_week' from the analysis
+selected_columns <- setdiff(names(daily_activity), c("id", "date", "day_of_week"))
+
+# Create a summary table for these variables
+summary_table <- daily_activity %>%
+  select(all_of(selected_columns)) %>%
+  summarise(across(everything(), 
+                   list(Mean = ~round(mean(.), 2),
+                        Median = ~round(median(.), 2),
+                        Min = ~round(min(.), 2),
+                        Max = ~round(max(.), 2),
+                        SD = ~round(sd(.), 2)),
+                   .names = "{col}_{.fn}")) %>%
+  pivot_longer(cols = everything(), 
+               names_to = c("Variable", ".value"), 
+               names_pattern = "(.*)_(.*)")
+
+# Display the summary table
+knitr::kable(summary_table, caption = "Summary Statistics of Daily Activity Variables")
+
+```
+The summary statistics of the 'daily_activity' dataset offer insightful revelations about daily physical activity and health metrics. On average, individuals take around 7,638 steps daily, but there's considerable variation, as indicated by the high standard deviation of about 5,087 steps. This variability is also reflected in the median of 7,405 steps, which is lower than the mean, hinting at skewed data with some individuals achieving significantly higher step counts. The total distance covered daily averages at approximately 5.49 km, but again, the range is broad, spanning from no activity to over 28 km.
+
+In terms of active and sedentary behaviors, the data shows that on average, individuals spend about 21 minutes in very active states and 14 minutes in fairly active states daily. However, the significantly higher median for lightly active minutes (199 minutes) compared to very and fairly active minutes suggests that people tend to engage more in light-intensity activities. Sedentary behavior is predominant, with an average of 991 minutes (over 16 hours) spent sedentary, highlighting a potentially concerning trend in lifestyle habits.
+
+The calories burned per day average around 2,304, with a wide range from zero to 4,900 calories, underscoring the diversity in individual metabolic rates and activity levels. Overall, these statistics reveal a pattern of moderate activity interspersed with significant periods of sedentary behavior, emphasizing the need for targeted interventions to promote more active and less sedentary lifestyles.
+
+##### Plotting the correlation between variables
+
+```{r cor matrix, echo=FALSE, message=FALSE, warning=FALSE}
+# Calculate the correlation matrix
+correlation_matrix <- cor(daily_activity %>% select(-id, -date))
+# Create a correlation plot
+corrplot(correlation_matrix, method = "color", type = "upper", 
+         order = "hclust", tl.cex = 0.6, tl.col = "black", 
+         tl.srt = 45, addCoef.col = "black", number.cex = 0.6)
+```
+
+The correlation analysis reveals some notable insights. Particularly striking is the high correlation between total steps and total distance, indicating a very strong and direct relationship between these two fundamental activity metrics as expected. Also interesting is the negative correlation between sedentary minutes and lightly active minutes, highlighting a clear trade-off between active and inactive periods. 
+
+##### The relationship between Total Steps vs. Calories with a regression line
+```{r Scatter plot 2, echo=FALSE, message=FALSE, warning=FALSE}
+# Scatter Plot for Total Steps vs. Calories with a Regression Line
+ggplot(data=daily_activity, aes(x=total_steps, y=calories)) + 
+  geom_point() + 
+  geom_smooth(method="lm") + 
+  labs(title="Total Steps vs. Calories", x="Total Steps", y="Calories") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=0, hjust=1), 
+        plot.title = element_text(hjust = 0.5)) 
+```
+
+The positive linear relationship can bee seen above again with a scatter plot. 
+
+
+##### Violin plot of total steps by day of the week
+```{r Violin plot of total steps by day of the week,echo=FALSE, message=FALSE, warning=FALSE}
+# Extract day of the week from the date
+daily_activity$day_of_week <- weekdays(daily_activity$date)
+
+# Create a factor with the levels ordered correctly for days of the week
+daily_activity$day_of_week <- factor(daily_activity$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+
+# Exclude the last date from the dataset
+filtered_daily_activity <- daily_activity %>%
+  filter(date != max(date))
+
+# Create a violin plot with data points and median points
+ggplot(filtered_daily_activity, aes(x = day_of_week, y = total_steps)) +
+  geom_violin(aes(fill = day_of_week), trim = FALSE, alpha = 0.4) +
+  geom_jitter(aes(color = day_of_week), width = 0.15, size = 2) +
+  stat_summary(fun=median, geom="point", size=3, color="black", shape=18) + # Add median points
+  labs(title = "Violin Plot of Total Steps by Day of the Week",
+       x = "Day of the Week",
+       y = "Total Steps") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.title.position = "plot",
+    legend.position = "none"  # Hides the legend
+  ) +
+  scale_fill_viridis_d(option = "C", end = 0.9, begin = 0.1, name = NULL) +
+  scale_color_viridis_d(option = "C", end = 0.9, begin = 0.1, name = NULL)
+
+```
+
+##### Summary statistics of total steps by day of the week
+```{r Summary statistics of total steps by day of the week,echo=FALSE, message=FALSE, warning=FALSE}
+# Create a summary table
+summary_table <- daily_activity %>%
+  group_by(day_of_week) %>%
+  summarize(
+    Mean = round(mean(total_steps), 2),
+    Median = round(median(total_steps), 2),
+    Min = round(min(total_steps), 2),
+    Max = round(max(total_steps), 2),
+    SD = round(sd(total_steps), 2)
+  ) %>%
+  arrange(match(day_of_week, c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")))
+
+# Display the table using knitr
+knitr::kable(summary_table, caption = "Summary Statistics of Total Steps by Day of the Week")
+
+```
+
+
+The summary statistics of total steps taken across different days of the week reveal a nuanced pattern of physical activity. Notably, Tuesdays and Thursdays stand out with higher median steps, suggesting more consistent activity levels on these days. In contrast, while weekends, particularly Sundays, register the lowest median steps, they exhibit the highest maximum steps, indicating sporadic bursts of high activity, possibly linked to leisure or recreational activities.
+
+This data suggests that while weekdays, especially Tuesdays and Thursdays, are characterized by steady, moderate activity levels, weekends are marked by greater variability in physical activity. The high standard deviations on weekends, especially Saturday, further underscore this inconsistency. These insights highlight an opportunity for targeted health and wellness interventions. Encouraging consistent activity throughout the week, particularly on weekends, could be beneficial. Additionally, given that daily step counts do not consistently reach the recommended 10,000 steps, integrating motivational features or personalized health recommendations into the app could nudge users towards more active lifestyles. Understanding these patterns and incorporating demographic data for a deeper customer segmentation analysis could lead to more effective, personalized user engagement strategies.
+
+
+
+### Analysing Heart Rate Dataset
+
+##### Summary statistics for heart rate values
+```{r Summary statistics for heart rate values,echo=FALSE, message=FALSE, warning=FALSE}
+# Calculate summary statistics for heart rate values for each ID
+summary_table_hr_by_id <- heartrate_seconds %>%
+  group_by(id) %>%
+  summarise(
+  Mean = round(mean(value), 2),
+  Median = round(median(value), 2),
+  Min = round(min(value), 2),
+  Max = round(max(value), 2),
+  SD = round(sd(value), 2)
+  ) %>%
+  ungroup()  # Remove grouping
+
+# Display the summary table
+knitr::kable(summary_table_hr_by_id, caption = "Summary Statistics of Heart Rate by ID")
+```
+
+
+##### Boxplot for each ID
+
+```{r Boxplot for each ID,echo=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+# Boxplot for each ID
+ggplot(heartrate_seconds, aes(x = factor(id), y = value)) +
+  geom_boxplot() +
+  labs(title = "Heart Rate Distribution by ID",
+       x = "ID",
+       y = "Heart Rate (bpm)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1), 
+        plot.title = element_text(hjust = 0.5))   # Rotate x-axis labels for better readability
+
+```
+
+
+The summary statistics of heart rate by ID illustrate diverse physiological patterns among individuals. Mean heart rates range from approximately 66 to 93 bpm, indicating varied resting or active states. The closely aligned means and medians suggest symmetrical distributions for most individuals. The extensive range in minimum and maximum heart rates, from as low as 36 bpm to as high as 203 bpm, reflects the breadth of physical states, from rest to high activity. The standard deviations, varying significantly across IDs, highlight the distinct fluctuations in heart rate each person experiences.
+
+Overall,The summary table and the boxplot suggest that each individual's heart rate pattern is unique, potentially influenced by a variety of factors including physical activity, overall health, and lifestyle habits. Such insights can be invaluable for personalized health monitoring and targeted interventions.
+
+
+### Analysing Intensities Data
+
+```{r Intensities,echo=FALSE,echo=FALSE, message=FALSE, warning=FALSE}
+# Convert the activity_hour column to datetime
+hourly_intensities$activity_hour <- as.POSIXct(hourly_intensities$activity_hour, format="%m/%d/%Y %I:%M:%S %p")
+
+# Extract the day of the week and hour
+hourly_intensities$day_of_week <- weekdays(hourly_intensities$activity_hour)
+hourly_intensities$hour <- format(hourly_intensities$activity_hour, "%H")
+
+# Aggregate to get average intensity per hour for each day of the week
+average_intensity_by_hour <- hourly_intensities %>%
+  group_by(day_of_week, hour) %>%
+  summarise(average_intensity = mean(average_intensity, na.rm = TRUE)) %>%
+  ungroup()
+
+# Reorder the days of the week
+average_intensity_by_hour$day_of_week <- factor(average_intensity_by_hour$day_of_week, 
+                                                levels = c( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"))
+
+# Create the plot with a single color gradient and numbers on boxes
+ggplot(average_intensity_by_hour, aes(x=day_of_week, y=hour, fill=average_intensity)) +
+  geom_tile() + 
+  geom_text(aes(label = sprintf("%.2f", average_intensity)), color = "black", size = 3) +  # Add numbers on boxes, rounded to two decimals
+  scale_fill_gradient(low = "lightblue", high = "darkblue", name = "Average Intensity") +
+  scale_x_discrete(limits = c( "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) +  # Adjust x-axis for discrete values
+  scale_y_discrete(breaks = unique(average_intensity_by_hour$hour)) +  # Adjust y-axis dimensions
+  labs(title="Average Intensity by Day of the Week and Hour",
+       x="Day of the Week", 
+       y="Hour of the Day") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=0, hjust=1), 
+        plot.title = element_text(hjust = 0.5)) 
+```
+
+The analysis of hourly intensities across different days of the week reveals distinct peaks in user activity, particularly in the evening, especially between 5 PM and 7 PM on Wednesdays, indicating a midweek surge in physical activities, possibly due to post-work exercise routines. Additionally, activity levels on Saturday around noon time are notably higher than other days, suggesting that users might be engaging in outdoor activities or workouts during weekend leisure time. This information is beneficial for Bellabeat, as it can tailor its engagement strategies by sending targeted reminders or motivational content during these peak hours. Encouraging users to maintain or increase physical activities during these times can optimize app engagement and promote a healthier lifestyle, especially for those with a tendency towards sedentary behavior on weekdays.
+
+
+
+
+### Analysing Daily Sleep Dataset
+ 
+##### Box plot for total minus asleep per capita 
+```{r Box plot for total minus asleep per capita, echo=FALSE, message=FALSE, warning=FALSE}
+# Boxplot for total minutes asleep
+ggplot(sleep_day, aes(x = factor(id), y = total_minutes_asleep)) +
+  geom_boxplot() +
+  labs(title = "Total Minutes Asleep Distribution by ID",
+       x = "ID",
+       y = "Total Minutes Asleep") +
+  theme_minimal() +
+ theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        plot.title = element_text(hjust = 0.5)) 
+```
+
+
+The summary statistics of total minutes asleep reflect significant variability in sleep patterns across the dataset. The data shows a broad range in average sleep duration, with some instances of extremely low or high averages, suggesting potential anomalies or data entry errors. Median values are generally aligned with the means, indicating a mostly symmetrical distribution of sleep durations. However, the wide spread in minimum and maximum sleep times highlights the diversity in sleep habits, ranging from very short to extended durations. The variability in sleep patterns, as evidenced by the standard deviations, suggests differing levels of consistency among individuals, with some showing stable sleep routines and others experiencing more fluctuation. Overall, these statistics underscore the individuality of sleep habits, possibly influenced by a mix of personal, health, and environmental factors.
+
+##### Violin plot of total hours asleep by day of the week
+```{r Violin plot of total hours asleep by day of the week, echo=FALSE, message=FALSE, warning=FALSE}
+# Extract day of the week from the date
+sleep_day$day_of_week <- weekdays(sleep_day$date)
+
+# Create a factor with the levels ordered correctly for days of the week
+sleep_day$day_of_week <- factor(sleep_day$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+
+# Create a violin plot for total hours asleep by day of the week
+ggplot(sleep_day, aes(x = day_of_week, y = total_minutes_asleep/60, fill = day_of_week)) +
+  geom_violin(trim = FALSE, alpha = 0.4) +
+  geom_jitter(width = 0.15, size = 2) +
+  stat_summary(fun = median, geom = "point", size = 3, color = "white", shape = 18) + # Add median points
+  labs(title = "Violin Plot of Total Hours Asleep by Day of the Week",
+       x = "Day of the Week",
+       y = "Total Hours Asleep") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "none"
+  ) +
+  scale_fill_viridis_d(begin = 0.1, end = 0.9)
+
+# Note: Adjust the plot aesthetics as necessary
+
+```
+
+##### Summary statistics of total hours asleep by day of the week
+```{r Summary statistics of total hours asleep by day of the week,echo=FALSE, message=FALSE, warning=FALSE}
+# Add a column for day of the week
+sleep_day$day_of_week <- weekdays(as.Date(sleep_day$date))
+
+# Create a factor with the levels ordered correctly for days of the week
+sleep_day$day_of_week <- factor(sleep_day$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+
+# Create a summary table for total hours asleep by day of the week, rounded to 2 decimal places
+summary_table_sleep <- sleep_day %>%
+  group_by(day_of_week) %>%
+  summarize(
+    Mean = round(mean(total_minutes_asleep / 60), 2),
+    Median = round(median(total_minutes_asleep / 60), 2),
+    Min = round(min(total_minutes_asleep / 60), 2),
+    Max = round(max(total_minutes_asleep / 60), 2),
+    SD = round(sd(total_minutes_asleep / 60), 2)
+  ) %>%
+  arrange(match(day_of_week, c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")))
+
+# Display the summary table
+knitr::kable(summary_table_sleep, caption = "Summary Statistics of Total Hours Asleep by Day of the Week")
+
+```
+
+The sleep data reveals a distinct pattern throughout the week, with the median sleep duration indicating that individuals tend to sleep less on Tuesdays and Thursdays, averaging around 6.95 and 7.06 hours respectively. These days stand out as the ones with the shortest median sleep times, suggesting midweek nights might be the busiest or most sleep-challenged for many individuals. In contrast, Sundays show a marked increase in sleep duration, with the highest median sleep time of 8.02 hours, indicating that people tend to catch up on sleep during the weekend.
+
+
+#### Relationship between Minutes Asleep and Sedentary Minutes
+
+```{r Relationship between Minutes Asleep and Sedentary Minutes,echo=FALSE, message=FALSE, warning=FALSE}
+# Merge the sleep_day and daily_activity datasets by 'id' and 'date'
+merged_data <- merge(sleep_day, daily_activity, by=c('id', 'date'))
+
+# Get a quick overview of the merged dataset to ensure it merged correctly
+# glimpse(merged_data)
+
+# Create a scatter plot of total minutes asleep vs. sedentary minutes
+ggplot(data=merged_data, aes(x=total_minutes_asleep, y=sedentary_minutes)) + 
+  geom_point(color='darkblue', alpha=0.5) +  # Points are colored dark blue with 50% transparency to reduce overplotting
+  geom_smooth(method="loess", color="steelblue") +  # Add a loess smoothed trend line in steel blue to highlight the overall trend
+  labs(title="Relationship between Minutes Asleep and Sedentary Minutes", 
+       x="Total Minutes Asleep", 
+       y="Sedentary Minutes") +  # Add labels and title for clarity
+  theme_minimal() +  # Use a minimal theme for a clean look
+  theme(legend.position="bottom", 
+        plot.title = element_text(hjust = 0.5))  # Position the legend at the bottom
+# Note that geom_smooth() by default includes a 95% confidence interval around the smooth line
+# This shaded area gives an idea of the uncertainty around the trend estimate
+```
+
+From the plot, I can observe that individuals with fewer minutes asleep tend to have higher sedentary minutes, which could indicate less restful sleep or shorter sleep duration correlating with longer periods of inactivity during waking hours. On the other hand, those with more minutes asleep tend to have fewer sedentary minutes, suggesting that better-rested individuals might be more active.
+
+## Act
+
+##### Strategic Recommendations
+
+Based on the analysis of the Fitbit Fitness Tracker Data, several actionable strategies for Bellabeat can be proposed:
+
+1. **Personalized Sleep Insights**: Offer personalized sleep analysis and improvement recommendations, as our data indicates a broad range of sleep behaviors and a potential need for better sleep management.
+
+2. **Sedentary Behavior Alerts**: Implement features that prompt users to move after periods of inactivity, targeting the correlation between high sedentary minutes and reduced sleep.
+
+3. **Targeted Wellness Content**: Create wellness content that targets days with lower activity levels (e.g., Tuesdays and Thursdays), providing motivation and suggestions for easy-to-integrate exercises.
+
+4. **Enhanced Data Collection**: Expand data collection efforts to include demographic information such as age, gender, and lifestyle factors. This enriched dataset will allow for a more segmented and targeted analysis, enabling Bellabeat to tailor its products and marketing strategies to specific consumer groups and individual preferences.
+
+
+##### Possible Implementation Plan
+
+1. **Product Development**: Integrate the insights into the product roadmap, focusing on feature updates that align with the activity and sleep patterns identified.
+
+2. **Marketing Campaigns**: Develop marketing campaigns that highlight the benefits of consistent activity and good sleep, showcasing how Bellabeat products support these goals.
+
+3. **Customer Engagement**: Use the data to inform customer engagement strategies, such as personalized notifications and rewards for reaching activity and sleep targets.
+
+4. **Continuous Monitoring**: Establish a framework for ongoing data analysis to monitor the effectiveness of the implemented strategies and make adjustments as needed.
+
+
+## Conclusion
+
+The analysis of the Fitbit Fitness Tracker Data has yielded several actionable insights that can inform Bellabeat's strategic decisions regarding product development and marketing. I've identified key patterns in physical activity, sleep, and sedentary behavior that can guide the creation of personalized user experiences and health-driven community engagement. 
+
+However, it is important to acknowledge the limitations of this analysis. The dataset used is relatively small and dated, as it represents a sample from 2016 and may not reflect current trends or the wider demographic Bellabeat targets. The absence of demographic information within the dataset limits the depth of our customer segmentation and the personalization of insights. Additionally, the data is sourced from a third-party and may not fully represent the user engagement that Bellabeat's own products would elicit.
+
+Despite these limitations, the strategic recommendations provided offer a foundation for Bellabeat to enhance its user engagement and product features. It is crucial for Bellabeat to continue investing in data collection and analysis, particularly gathering more current and comprehensive data that includes demographic details. This will enable Bellabeat to refine its strategies, ensuring they are based on accurate and representative insights. By continually adapting to the evolving needs and preferences of its users, Bellabeat can maintain a competitive edge in the health and wellness technology market.
+
