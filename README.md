@@ -27,14 +27,12 @@ The analysis utilizes the [FitBit Fitness Tracker Data](https://www.kaggle.com/d
 
 ## Key Findings
 
+- **Peak Activity Hours**: Elevated physical activity observed between 5 PM and 7 PM on Weekdays and around noon on Saturdays, suggesting post-work exercise routines and weekend leisure activities.
+- **Day-wise Activity Variations**: Higher median steps on Tuesdays and Thursdays, with weekends showing sporadic high activity bursts.
 - **Physical Activity**: Significant variability in user's physical activity levels.
 - **Sleep Patterns**: Varying sleep patterns with less sleep noted on specific weekdays.
 - **Sedentary Trends**: Predominance of sedentary behavior in daily routines.
 - **Caloric Expenditure**: Positive correlation between physical activity and calories burned.
-- **Peak Activity Hours**: Elevated physical activity observed between 5 PM and 7 PM on Weekdays and around noon on Saturdays, suggesting post-work exercise routines and weekend leisure activities.
-- **Day-wise Activity Variations**: Higher median steps on Tuesdays and Thursdays, with weekends showing sporadic high activity bursts.
-
-
 
 ## Recommendations
 
