@@ -3,8 +3,8 @@ title: "Analysis of Smart Device Usage for Strategic Marketing Insights at Bella
 author: "Emmett Demirhan"
 date: "2023-12-06"
 output:
-  html_document: null
-  word_document: default
+  html_document: default
+  word_document: null
 ---
 ```{css, echo=FALSE}
 .subtitle {
@@ -18,15 +18,15 @@ output:
 ```
 ## Executive Summary
 
-This analysis presents strategic insights into smart device usage for Bellabeat, a high-tech producer of health-focused products for women. Leveraging data from Fitbit fitness trackers, the study aimed to understand user behaviors in physical activity, sleep monitoring, and heart rate trends to enhance Bellabeat's marketing strategies.
+This analysis presents strategic insights into smart device usage for Bellabeat, a high-tech producer of health-focused products for women. The study used data from Fitbit fitness trackers to understand user behaviours in physical activity, sleep monitoring, and heart rate trends to enhance Bellabeat’s marketing strategies.
 
-Key findings indicate that users exhibit significant variability in physical activity, with an average step count of 7,638 steps per day and a considerable standard deviation, suggesting a wide range of individual activity levels. Moreover, sleep data analysis uncovered varying patterns, particularly less sleep on Tuesdays and Thursdays. Sedentary behavior was notably predominant, with users averaging over 16 hours of inactivity, stressing the need for features that encourage movement. Additionally, a positive linear relationship was found between total steps and calories burned, underscoring the importance of regular physical activity for energy expenditure and weight management.
+Key findings indicate that users exhibit significant variability in physical activity, with an average step count of 7,638 steps per day and a considerable standard deviation, suggesting a wide range of individual activity levels. Moreover, sleep data analysis uncovered varying patterns, remarkably less sleep on Tuesdays and Thursdays. Sedentary behaviour was notably predominant, with users averaging over 16 hours of inactivity, stressing the need for features that encourage movement. Additionally, a positive linear relationship was found between total steps and calories burned, underscoring the importance of regular physical activity for energy expenditure and weight management.
 
-The strategic recommendations for Bellabeat based on this analysis include developing personalized sleep insights, sedentary behavior alerts, and wellness content targeting less active days. Furthermore, expanding data collection to include demographic information would enable more targeted marketing strategies.
+The strategic recommendations for Bellabeat based on this analysis include developing personalised sleep insights, sedentary behaviour alerts, and wellness content targeting less active days. Furthermore, expanding data collection to include demographic information would enable more targeted marketing strategies.
 
-The implementation of these insights could be done through product development, marketing campaigns, and customer engagement initiatives that align with the identified user behaviors. Continuous monitoring of strategy effectiveness and data-driven adjustments are essential for sustained impact.
+These insights could be implemented through product development, marketing campaigns, and customer engagement initiatives that align with the identified user behaviours. Continuous monitoring of strategy effectiveness and data-driven adjustments are essential for sustained impact.
 
-In conclusion, while the dataset provides valuable insights, it is limited by its size, scope, and the fact that it is somewhat dated. To maximize the efficacy of the derived strategies, Bellabeat is advised to invest in more comprehensive and current data collection, including demographic details, to ensure that the insights and recommendations are reflective of its target market's behaviors and needs.
+In conclusion, while the dataset provides valuable insights, it is limited by its size, scope, and the fact that it is somewhat dated. To maximise the efficacy of the derived strategies, Bellabeat is advised to invest in more comprehensive and current data collection, including demographic details, to ensure that the insights and recommendations reflect its target market’s behaviours and needs.
 
 
 ##  Business Task Overview
@@ -52,7 +52,6 @@ By analyzing existing smart device usage data, specifically from non-Bellabeat p
 My approach involves a detailed analysis of the FitBit Fitness Tracker Data to explore user habits in areas such as physical activity, heart rate monitoring, and sleep patterns. This data, though external, provides a valuable proxy to understand potential behaviors and preferences of Bellabeat's current and prospective customer base.
 
 
-
 ##  Ask
 
 #### Analysis Goals:
@@ -61,27 +60,19 @@ In this phase of the analysis, the goal is to identify and clarify the key quest
 
 #### Key Questions:
 
-1. **Trend Analysis**: What are the prevailing trends in smart device usage, especially in areas relevant to Bellabeat’s products (such as activity tracking, sleep monitoring, and stress management)?
+1. **Sleep and Activity Correlation**: How do sleep patterns correlate with physical activity levels among smart device users?
 
-2. **Consumer Behavior**: How do these trends reflect the behaviors and preferences of potential Bellabeat customers?
+2. **User Engagement Timing**: What are the peak activity hours where user engagement with Bellabeat products could be maximized?
 
-3. **Strategic Application**: How can these identified trends be leveraged to enhance Bellabeat's marketing strategies and product offerings?
+3. **Behavioral Insights Application**: How can insights into sedentary and active behaviours inform product enhancements and marketing strategies?
 
-4. **Market Opportunities**: Are there unexplored areas in the smart device market that Bellabeat can capitalize on, based on the trends and patterns observed in the data?
+4. **Data-Driven Product Development**: What features can be added or improved in Bellabeat products to cater to the identified needs and habits of the target audience?
 
-5. **Competitive Advantage**: How do Bellabeat's products compare with non-Bellabeat smart devices in terms of features and user engagement? What unique value propositions could Bellabeat offer to stand out in the market?
+#### Approach:
 
-#### Approach to Addressing the Questions:
-
-To address these questions, a systematic approach will be taken to explore the FitBit Fitness Tracker Data. This will involve:
-
-- **Data Exploration**: Examining the dataset to understand its structure, content, and quality.
-- **Data Analysis**: Conducting both descriptive and inferential statistical analyses to uncover patterns and trends in the data.
-- **Comparative Analysis**: Comparing findings from the FitBit data with Bellabeat’s product features and market positioning.
-
-#### Expected Outcomes:
-
-The outcome of this phase will be a clear set of objectives for the data preparation, processing, and analysis stages. The insights gained from addressing these questions will directly inform the strategic marketing decisions and potential innovation areas for Bellabeat.
+* Conduct an in-depth correlation analysis to explore the relationships between different health metrics.
+* Utilize time-series analysis to identify peak activity periods for targeted engagement strategies.
+* Analyse behavioral trends to inform both product development and marketing messaging.
 
 #### Stakeholder Engagement:
 
@@ -96,11 +87,7 @@ Throughout this phase, engagement with key stakeholders, including Bellabeat’s
 The data for this analysis comes from the FitBit Fitness Tracker Data, provided under the CC0: Public Domain license by Möbius and available on [Kaggle](https://www.kaggle.com/datasets/arashnic/fitbit). This dataset comprises personal fitness tracker data from thirty Fitbit users, including minute-level output for physical activity, heart rate, and sleep monitoring.
 
 ##### Storage:
-The dataset consists of 18 CSV files, stored locally on my machine for ease of access and analysis. The files are organized in a dedicated directory, ensuring efficient management and retrieval during the analysis process.
-
-#### Data Organization and Structure
-
-The dataset is divided into 18 CSV files, each representing different aspects of the users' fitness and health data. These files include information on daily activity, steps, sleep patterns, heart rate, and more. The data is organized in a long format, which is ideal for time-series analysis and tracking individual user metrics over time.
+The dataset consists of 18 CSV files, stored locally on my machine and also on [GitHub repository](https://github.com/EmmettDemirhan/Google_Data_Analytics_Capstone_Project/tree/main/Fitabase_Data) for ease of access and analysis. The files are organized in a dedicated directory, ensuring efficient management and retrieval during the analysis process.
 
 #### Data Credibility and Integrity
 
@@ -115,23 +102,13 @@ The dataset is divided into 18 CSV files, each representing different aspects of
 ##### Addressing Limitations:
 
 To mitigate these limitations, particularly the issues of small sample size and lack of comprehensiveness, one plan to:
+
 - Explore additional datasets that could complement and enhance this dataset.
 - Conduct a thorough exploratory data analysis to identify and understand any gaps or inconsistencies in the data.
 
 #### Data Privacy and Ethics
 
-The data was collected with the consent of the participants and is publicly available, respecting the privacy and ethical considerations of personal health data usage. However, it's essential to maintain this standard of privacy and ethics throughout the analysis process.
-
-#### Preliminary Data Check
-
-Before diving into detailed analysis, an initial check of the data’s integrity and structure will be performed. This involves:
-
-- Loading each CSV file into R to understand its structure and content.
-- Checking for missing values, outliers, and inconsistencies.
-- Summarizing the key features of each dataset to ensure a good understanding of the available data.
-
-
-
+The data used in this analysis is sourced from the publicly available FitBit Fitness Tracker dataset on Kaggle. It contains anonymised information, ensuring no personal or identifiable data of participants is revealed.
 
 ## Process
 
@@ -213,7 +190,7 @@ for (dataset in datasets) {
 
 Interpreting the output, it's evident that the Fitbit dataset offers a comprehensive view of user activity, encompassing various aspects like daily activity levels, calorie consumption, sleep patterns, heart rate, and intensity of physical activities. The presence of both granular (minute-level) and aggregated (daily, hourly) data allows for a detailed examination of user behaviors. However, some datasets appear to be redundant, such as daily_activity overlapping with individual daily_calories, daily_steps, and daily_intensities, and similarly, minute_calories_narrow vs. minute_calories_wide. The weight_log_info dataset, although small, provides valuable insights into weight and BMI trends, which can be correlated with activity data for more in-depth analysis.
 
-From these datasets, valuable insights can be garnered to inform Bellabeat's marketing and product strategies. By analyzing daily activity patterns and calorie burn, we can understand the typical user's fitness routines and tailor marketing messages to fit these habits. The sleep data provides an avenue to explore how Bellabeat's products can enhance sleep quality and wellness routines. The minute-level data offer a rich source for understanding the intensity and duration of physical activities, potentially revealing when users are most active and how they engage with fitness. This granular analysis could guide the development of personalized features in Bellabeat products. Finally, examining the correlations between different datasets, like activity levels and weight changes, can reveal deeper behavioral insights, helping Bellabeat to position its products as effective tools for holistic health management.
+From these datasets, valuable insights can be garnered to inform Bellabeat's marketing and product strategies. By analysing daily activity patterns and calorie burn, we can understand the typical user's fitness routines and tailor marketing messages to fit these habits. The sleep data provides an avenue to explore how Bellabeat's products can enhance sleep quality and wellness routines. The minute-level data offer a rich source for understanding the intensity and duration of physical activities, potentially revealing when users are most active and how they engage with fitness. This granular analysis could guide the development of personalized features in Bellabeat products. Finally, examining the correlations between different datasets, like activity levels and weight changes, can reveal deeper behavioral insights, helping Bellabeat to position its products as effective tools for holistic health management.
 
 #### Data Cleaning and Manipulation
 
