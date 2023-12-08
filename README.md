@@ -19,7 +19,8 @@ The analysis utilizes the [FitBit Fitness Tracker Data](https://www.kaggle.com/d
 
 ## Files in the Repository
 
-- `Bellabeat_Analytics.Rmd`: R Markdown file containing the complete analysis, including code and data processing .
+- `Bellabeat_Analytics.Rmd`: R Markdown file containing the complete analysis, including code and data processing.
+- `Bellabeat_Analytics.html`: HTML file containing the complete analysis, including code and data processing.
 - `Bellabeat_Analytics_Report.pdf`: Comprehensive report of the findings and strategic recommendations, excluding code and data manipulation details.
 - `Fitabase_Data`: Folder containing all datasets used in the analysis.
 - `Google_Data_Analytics_Certificate.pdf`: Certificate of completion for the Google Data Analytics Professional Certificate program.
