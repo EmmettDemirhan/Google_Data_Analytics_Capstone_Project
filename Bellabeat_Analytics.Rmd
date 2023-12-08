@@ -139,7 +139,7 @@ Before diving into detailed analysis, an initial check of the data’s integrity
 
 Here, I load each CSV file from the FitBit Fitness Tracker Data into R and conduct a preliminary examination.
 
-```{r load-data, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+```{r load-data, echo=TRUE, message=FALSE, warning=FALSE}
 # Load Libraries
 library('tidyverse')
 library('janitor')
@@ -184,12 +184,12 @@ for (file in file_names) {
     assign(cleaned_var_name, dataset)  # Assign cleaned dataset to cleaned variable name
     datasets <- c(datasets, cleaned_var_name)  # Store cleaned dataset name
 }
-# datasets
+ datasets
 ```
 
 #### Inspecting each dataset
 
-```{r first inspection,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+```{r first inspection, echo=TRUE, message=FALSE, warning=FALSE}
 # Loop through each dataset, print its name, dimensions, and column names
 for (dataset in datasets) {
   cat("\nDataset name:", dataset, "\n")
@@ -202,7 +202,7 @@ for (dataset in datasets) {
   cat("Column Names:", toString(names(data)), "\n")
 }
 ```
-```{r Inspect, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+```{r Inspect,echo=TRUE, message=FALSE, warning=FALSE}
 # # Loop through each dataset, print its name and use glimpse to view its structure
 # for (dataset in datasets) {
 #   cat("\nDataset name:", dataset, "\n")
@@ -218,7 +218,8 @@ From these datasets, valuable insights can be garnered to inform Bellabeat's mar
 #### Data Cleaning and Manipulation
 
 ##### Trasnforming the date columns
-```{r trasnforming the date columns, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+
+```{r trasnforming the date columns, echo=TRUE, message=FALSE, warning=FALSE}
 # Standardize and convert date columns to a consistent format
 convert_and_rename_date <- function(df, old_date_column, new_date_column = "date") {
   df <- df %>% rename(!!new_date_column := !!old_date_column)  # Standardize the column name
@@ -242,49 +243,169 @@ convert_and_rename_datetime_to_date <- function(df, old_datetime_column, new_dat
 # Applying the function to convert datetime to date formats and rename
 sleep_day <- convert_and_rename_datetime_to_date(sleep_day, "sleep_day")
 weight_log_info <- convert_and_rename_datetime_to_date(weight_log_info, "date")
+
 ```
 
-#### Checking Unique IDs
+#### Checking unique IDs
 
-```{r Unique id,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
-# Checking Unique IDs
-n_distinct(daily_activity$id) 
-n_distinct(weight_log_info$id) 
-n_distinct(sleep_day$id) 
-n_distinct(daily_calories$id)
-n_distinct(daily_intensities$id) 
-n_distinct(daily_steps$id)
+```{r Unique id, echo=TRUE, message=FALSE, warning=FALSE}
+# Initialize a data frame to store results
+unique_id_counts <- data.frame(dataset_name = character(), unique_ids = numeric(), stringsAsFactors = FALSE)
+
+# Loop to check unique IDs in all datasets
+for (dataset_name in datasets) {
+    dataset <- get(dataset_name)
+    unique_ids <- n_distinct(dataset$id)
+    unique_id_counts <- rbind(unique_id_counts, data.frame(dataset_name = dataset_name, unique_ids = unique_ids))
+}
+
+# Display the results
+print(unique_id_counts)
+
 ```
 
 
+#### Checking for duplicates
+```{r duplicates, echo=TRUE, message=FALSE, warning=FALSE}
+# Initialize a data frame to store results
+duplicate_counts <- data.frame(dataset_name = character(), number_of_duplicates = integer(), stringsAsFactors = FALSE)
 
+# Loop to check for duplicates in all datasets
+for (dataset_name in datasets) {
+    dataset <- get(dataset_name)
+    duplicate_count <- sum(duplicated(dataset))
+    duplicate_counts <- rbind(duplicate_counts, data.frame(dataset_name = dataset_name, number_of_duplicates = duplicate_count))
+}
 
-##### Removing duplicate inputs from sleep_day 
-```{r duplicates,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
-# Check for duplicates 
-sum(duplicated(daily_activity))
-sum(duplicated(weight_log_info))
-sum(duplicated(sleep_day))
-sum(duplicated(daily_calories))
-sum(duplicated(daily_intensities))
-sum(duplicated(daily_steps))
+# Display the results
+print(duplicate_counts)
+
 ```
-```{r removing duplicates,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
-# Remove duplicate entries
-sleep_day <- unique(sleep_day)
-sum(duplicated(sleep_day))
+
+
+#### Removing duplicate inputs
+```{r removing duplicates, echo=TRUE, message=FALSE, warning=FALSE}
+# Initialize a data frame to store results post-removal
+post_removal_duplicate_counts <- data.frame(dataset_name = character(), number_of_duplicates_post_removal = integer(), stringsAsFactors = FALSE)
+
+# Loop to remove duplicates from all datasets and check duplicates after removal
+for (dataset_name in datasets) {
+    dataset <- unique(get(dataset_name))
+    assign(dataset_name, dataset)
+    duplicate_count_post_removal <- sum(duplicated(dataset))
+    post_removal_duplicate_counts <- rbind(post_removal_duplicate_counts, data.frame(dataset_name = dataset_name, number_of_duplicates_post_removal = duplicate_count_post_removal))
+}
+
+# Display the results
+print(post_removal_duplicate_counts)
+```
+#### Checking unique days
+```{r removing unique_day_counts,  echo=TRUE, message=FALSE, warning=FALSE}
+# Initialize a data frame to store results
+unique_day_counts <- data.frame(dataset_name = character(), number_of_unique_days = integer(), stringsAsFactors = FALSE)
+
+# Loop to check unique days in all datasets
+for (dataset_name in datasets) {
+    dataset <- get(dataset_name)
+    if("date" %in% names(dataset)) {
+        unique_days <- length(unique(dataset$date))
+        unique_day_counts <- rbind(unique_day_counts, data.frame(dataset_name = dataset_name, number_of_unique_days = unique_days))
+    } else {
+        unique_day_counts <- rbind(unique_day_counts, data.frame(dataset_name = dataset_name, number_of_unique_days = NA_integer_))
+    }
+}
+# Display the results
+print(unique_day_counts)
+
 ```
 
-```{r scatter plot 1, echo=FALSE, height= 4, width= 4, message=FALSE, warning=FALSE}
+
+I will examine minute_sleep further as number_of_unique_days is 49773 for minute_sleep. It might be an issue with the data type. The NAs are normal as the columns names or types do not match. I will leave them as it is because I will not use these datasets.
+
+
+##### Compare minute_sleep with sleep_day data for validation
+```{r Compare minute_sleep, echo=TRUE, message=FALSE, warning=FALSE}
+# Assuming 'value' column in minute_sleep indicates minutes asleep
+
+daily_sleep_aggregated <- minute_sleep %>%
+  mutate(date = mdy_hms(date) %>% as.Date()) %>%
+  group_by(id, date) %>%
+  summarize(total_minutes_asleep = sum(value, na.rm = TRUE), .groups = "drop")
+
+# Joining with sleep_day dataset
+comparison_df <- sleep_day %>%
+  full_join(daily_sleep_aggregated, by = c("id", "date")) %>%
+  mutate(difference = total_minutes_asleep.x - total_minutes_asleep.y)
+
+# Checking differences
+head(comparison_df) %>%
+  select(id, date, total_minutes_asleep.x, total_minutes_asleep.y, difference) %>%
+  arrange(desc(abs(difference)))
+
+# Create the Plot
+ggplot(comparison_df, aes(x = total_minutes_asleep.x, y = total_minutes_asleep.y)) +
+  geom_point() +
+  labs(x = "Total Minutes Asleep (sleep_day)", 
+       y = "Total Minutes Asleep (daily_sleep_aggregated)", 
+       title = "Comparison of Sleep Data") +
+  theme_minimal() +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "blue") +
+  theme(plot.title = element_text(hjust = 0.5))  # Centering the title
+
+# so checking duplicates
+print(paste("Number of duplicates in daily_sleep_aggregated:", sum(duplicated(daily_sleep_aggregated))))
+
+# No duplicates, checking how many days I got
+# Counting unique days per id
+unique_days_sleep <- length(unique(daily_sleep_aggregated$date))
+print(paste("Number of unique days:", unique_days_sleep))
+      
+```
+
+- Large negative values in the difference column suggest that the total_minutes_asleep values in the sleep_day dataset are significantly higher than what is calculated from the minute_sleep dataset.
+- This discrepancy might be due to several factors, such as differences in how sleep duration is recorded or calculated in each dataset, or potential data quality issues.
+- I will keep using sleep_day data for analysis but questioning the data quality.
+- I got one extra day for daily_sleep_aggregated data. 
+
+
+##### Aggregate METs data to daily totals
+```{r Aggregate METs, echo=TRUE, message=FALSE, warning=FALSE}
+# Convert 'activity_minute' from character to datetime format
+minute_mets_narrow$activity_minute <- as.POSIXct(minute_mets_narrow$activity_minute, format="%m/%d/%Y %I:%M:%S %p")
+
+# Extract date from 'activity_minute'
+minute_mets_narrow$date <- as.Date(minute_mets_narrow$activity_minute)
+
+# Aggregate METs data to daily totals
+daily_mets <- aggregate(me_ts ~ id + date, minute_mets_narrow, sum)
+
+# Renameing mets columns as mets
+daily_mets <- daily_mets %>% rename(mets = me_ts)
+
+# Interestingly 962 columns which is higher than 940 as in daily_activities
+# so checking duplicates
+print(paste("Number of duplicates in date:", sum(duplicated(daily_mets))))
+      
+# No duplicates, checking how many days I got
+# Counting unique days per id
+unique_days <- length(unique(daily_mets$date))
+print(paste("Number of unique days:", unique_days))
+```
+
+I got one extra day for daily_mets data too. 
+
+##### Further examining daily_activity as tracker_distance and total_distance seem so similar
+
+```{r scatter plot 1, echo=TRUE, height= 4, width= 4, message=FALSE, warning=FALSE}
 # Create a scatter plot to see difference between tracker_distance and total_distance
 plot(daily_activity$tracker_distance, daily_activity$total_distance,
      xlab = "Tracker Distance", ylab = "Total Distance",
      main = "Scatter Plot of Total Steps vs. Total Distance")
 ```
 
-In this context, it seems that there might be entries made by customers in addition to the data from the tracker devices. Therefore, we are using "Total Distance" instead of "Tracker Distance" to understand how the total distance correlates with the total number of steps taken. 
+In this context, it seems that there might be entries made by customers in addition to the data from the tracker devices. Therefore, I use "Total Distance" instead of "Tracker Distance" to understand how the total distance correlates with the total number of steps taken. 
 
-```{r tracker, results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+```{r tracker,, echo=TRUE, message=FALSE, warning=FALSE}
 # Removing tracker_distance
 daily_activity <- daily_activity %>% select(-tracker_distance)
 glimpse(daily_activity)
@@ -292,7 +413,7 @@ glimpse(daily_activity)
 
 ##### Checking Missing Values
 
-```{r NAs ,  results='hide', echo=FALSE, message=FALSE, warning=FALSE}
+```{r NAs ,results='asis', echo=TRUE, message=FALSE, warning=FALSE}
 # Loop through each dataset and check for missing values
 for (dataset in datasets) {
   data <- get(dataset)
@@ -325,7 +446,7 @@ The output indicates that in the weight_log_info dataset, the only column with m
 
 ### Analysing Daily Activities Dataset
 
-```{r daily activities,echo=FALSE, message=FALSE, warning=FALSE}
+```{r daily activities,echo=TRUE, message=FALSE, warning=FALSE}
 # Exclude 'id', 'date', and 'day_of_week' from the analysis
 selected_columns <- setdiff(names(daily_activity), c("id", "date", "day_of_week"))
 
@@ -353,21 +474,52 @@ In terms of active and sedentary behaviors, the data shows that on average, indi
 
 The calories burned per day average around 2,304, with a wide range from zero to 4,900 calories, underscoring the diversity in individual metabolic rates and activity levels. Overall, these statistics reveal a pattern of moderate activity interspersed with significant periods of sedentary behavior, emphasizing the need for targeted interventions to promote more active and less sedentary lifestyles.
 
+###### Creating a combined data with important variables
+```{r combined_data, echo=TRUE, message=FALSE, warning=FALSE}
+# Merging with aggregated daily METs data
+combined_data <- merge(daily_activity, daily_mets, by = c("id", "date"))
+
+# Merging with sleep data
+combined_data <- merge(combined_data, sleep_day, by = c("id", "date"))
+# head(combined_data)
+
+# Select features based on domain knowledge and multicollinearity considerations
+combined_data <- combined_data %>%
+  select(calories, total_steps, very_active_minutes, fairly_active_minutes, lightly_active_minutes, sedentary_minutes, mets, total_minutes_asleep)
+head(combined_data)
+```
+Note: METs, or Metabolic Equivalent of Task, is a unit measuring the energy expenditure of physical activities, where one MET represents the rate of energy consumption while at rest.
+
 ##### Plotting the correlation between variables
 
-```{r cor matrix, echo=FALSE, message=FALSE, warning=FALSE}
+```{r cor matrix, echo=TRUE, message=FALSE, warning=FALSE}
 # Calculate the correlation matrix
-correlation_matrix <- cor(daily_activity %>% select(-id, -date))
+correlation_matrix <- cor(combined_data)
 # Create a correlation plot
 corrplot(correlation_matrix, method = "color", type = "upper", 
          order = "hclust", tl.cex = 0.6, tl.col = "black", 
          tl.srt = 45, addCoef.col = "black", number.cex = 0.6)
 ```
 
-The correlation analysis reveals some notable insights. Particularly striking is the high correlation between total steps and total distance, indicating a very strong and direct relationship between these two fundamental activity metrics as expected. Also interesting is the negative correlation between sedentary minutes and lightly active minutes, highlighting a clear trade-off between active and inactive periods. 
+The correlation matrix shows a strong positive correlation between calories burned and very active minutes (0.62) and a notable negative correlation between sedentary minutes and total minutes asleep (-0.65), indicating that more intense physical activity may increase calorie burn, while increased sedentary time may be associated with less sleep. 
+
+Reminder: Correlation does not mean causation. 
+
+
+##### The relationship between Total Steps vs. METs with a regression line
+```{r Scatter plot 2, echo=TRUE, message=FALSE, warning=FALSE}
+# Scatter Plot for Total Steps vs. METs with a Regression Line
+ggplot(data=combined_data, aes(x=total_steps, y=mets)) + 
+  geom_point() + 
+  geom_smooth(method="lm") + 
+  labs(title="Total Steps vs. METs", x="Total Steps", y="METs") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=0, hjust=1), 
+        plot.title = element_text(hjust = 0.5)) 
+```
 
 ##### The relationship between Total Steps vs. Calories with a regression line
-```{r Scatter plot 2, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Scatter plot 3, echo=TRUE, message=FALSE, warning=FALSE}
 # Scatter Plot for Total Steps vs. Calories with a Regression Line
 ggplot(data=daily_activity, aes(x=total_steps, y=calories)) + 
   geom_point() + 
@@ -377,12 +529,23 @@ ggplot(data=daily_activity, aes(x=total_steps, y=calories)) +
   theme(axis.text.x = element_text(angle=0, hjust=1), 
         plot.title = element_text(hjust = 0.5)) 
 ```
+##### The relationship between Sedentary minutes vs. Total minutes asleep with a regression line
+```{r Scatter plot 4, echo=TRUE, message=FALSE, warning=FALSE}
+# Scatter Plot for Total Steps vs. METs with a Regression Line
+ggplot(data=combined_data, aes(x=total_minutes_asleep, y=sedentary_minutes)) + 
+  geom_point() + 
+  geom_smooth(method="lm") + 
+  labs(title="Total Minutes Asleep vs. Sedentary Minutes", x="Total Minutes Asleep", y="Sedentary Minutes") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle=0, hjust=1), 
+        plot.title = element_text(hjust = 0.5)) 
+```
 
-The positive linear relationship can bee seen above again with a scatter plot. 
+The positive linear relationships can bee seen above again with scatter plots. 
 
 
 ##### Violin plot of total steps by day of the week
-```{r Violin plot of total steps by day of the week,echo=FALSE, message=FALSE, warning=FALSE}
+```{r Violin plot of total steps by day of the week,echo=TRUE, message=FALSE, warning=FALSE}
 # Extract day of the week from the date
 daily_activity$day_of_week <- weekdays(daily_activity$date)
 
@@ -413,7 +576,7 @@ ggplot(filtered_daily_activity, aes(x = day_of_week, y = total_steps)) +
 ```
 
 ##### Summary statistics of total steps by day of the week
-```{r Summary statistics of total steps by day of the week,echo=FALSE, message=FALSE, warning=FALSE}
+```{r Summary statistics of total steps by day of the week,echo=TRUE, message=FALSE, warning=FALSE}
 # Create a summary table
 summary_table <- daily_activity %>%
   group_by(day_of_week) %>%
@@ -441,7 +604,7 @@ This data suggests that while weekdays, especially Tuesdays and Thursdays, are c
 ### Analysing Heart Rate Dataset
 
 ##### Summary statistics for heart rate values
-```{r Summary statistics for heart rate values,echo=FALSE, message=FALSE, warning=FALSE}
+```{r Summary statistics for heart rate values,echo=TRUE, message=FALSE, warning=FALSE}
 # Calculate summary statistics for heart rate values for each ID
 summary_table_hr_by_id <- heartrate_seconds %>%
   group_by(id) %>%
@@ -461,7 +624,7 @@ knitr::kable(summary_table_hr_by_id, caption = "Summary Statistics of Heart Rate
 
 ##### Boxplot for each ID
 
-```{r Boxplot for each ID,echo=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Boxplot for each ID,echo=TRUE, message=FALSE, warning=FALSE}
 # Boxplot for each ID
 ggplot(heartrate_seconds, aes(x = factor(id), y = value)) +
   geom_boxplot() +
@@ -482,7 +645,7 @@ Overall,The summary table and the boxplot suggest that each individual's heart r
 
 ### Analysing Intensities Data
 
-```{r Intensities,echo=FALSE,echo=FALSE, message=FALSE, warning=FALSE}
+```{r Intensities,echo=TRUE, message=FALSE, warning=FALSE}
 # Convert the activity_hour column to datetime
 hourly_intensities$activity_hour <- as.POSIXct(hourly_intensities$activity_hour, format="%m/%d/%Y %I:%M:%S %p")
 
@@ -523,7 +686,7 @@ The analysis of hourly intensities across different days of the week reveals dis
 ### Analysing Daily Sleep Dataset
  
 ##### Box plot for total minus asleep per capita 
-```{r Box plot for total minus asleep per capita, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Box plot for total minus asleep per capita, echo=TRUE, message=FALSE, warning=FALSE}
 # Boxplot for total minutes asleep
 ggplot(sleep_day, aes(x = factor(id), y = total_minutes_asleep)) +
   geom_boxplot() +
@@ -539,7 +702,7 @@ ggplot(sleep_day, aes(x = factor(id), y = total_minutes_asleep)) +
 The summary statistics of total minutes asleep reflect significant variability in sleep patterns across the dataset. The data shows a broad range in average sleep duration, with some instances of extremely low or high averages, suggesting potential anomalies or data entry errors. Median values are generally aligned with the means, indicating a mostly symmetrical distribution of sleep durations. However, the wide spread in minimum and maximum sleep times highlights the diversity in sleep habits, ranging from very short to extended durations. The variability in sleep patterns, as evidenced by the standard deviations, suggests differing levels of consistency among individuals, with some showing stable sleep routines and others experiencing more fluctuation. Overall, these statistics underscore the individuality of sleep habits, possibly influenced by a mix of personal, health, and environmental factors.
 
 ##### Violin plot of total hours asleep by day of the week
-```{r Violin plot of total hours asleep by day of the week, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Violin plot of total hours asleep by day of the week, echo=TRUE, message=FALSE, warning=FALSE}
 # Extract day of the week from the date
 sleep_day$day_of_week <- weekdays(sleep_day$date)
 
@@ -566,7 +729,7 @@ ggplot(sleep_day, aes(x = day_of_week, y = total_minutes_asleep/60, fill = day_o
 ```
 
 ##### Summary statistics of total hours asleep by day of the week
-```{r Summary statistics of total hours asleep by day of the week,echo=FALSE, message=FALSE, warning=FALSE}
+```{r Summary statistics of total hours asleep by day of the week,echo=TRUE, message=FALSE, warning=FALSE}
 # Add a column for day of the week
 sleep_day$day_of_week <- weekdays(as.Date(sleep_day$date))
 
@@ -595,7 +758,7 @@ The sleep data reveals a distinct pattern throughout the week, with the median s
 
 #### Relationship between Minutes Asleep and Sedentary Minutes
 
-```{r Relationship between Minutes Asleep and Sedentary Minutes,echo=FALSE, message=FALSE, warning=FALSE}
+```{r Relationship between Minutes Asleep and Sedentary Minutes,echo=TRUE, message=FALSE, warning=FALSE}
 # Merge the sleep_day and daily_activity datasets by 'id' and 'date'
 merged_data <- merge(sleep_day, daily_activity, by=c('id', 'date'))
 
@@ -629,6 +792,7 @@ Based on the analysis of the Fitbit Fitness Tracker Data, several actionable str
 3. **Optimize Engagement for Peak Activity Hours**: Create engagement strategies and motivational content targeting peak activity periods, like weekday evenings and Saturday noons.
 4. **Targeted Wellness Interventions**: Develop interventions for consistent physical activity throughout the week, leveraging insights from daily activity patterns.
 5. **Enhanced Data Collection**: Expand data collection to include demographic information for more segmented and targeted analysis, tailoring products and marketing to specific consumer groups and preferences.
+6. **Sleep-Activity Balance Insights**: Integrate features in Bellabeat's app to analyse the link between sleep duration and sedentary behaviour, guiding users towards improving sleep quality and increasing physical activity for a healthier lifestyle balance.
 
 ### Possible Implementation Plan
 
@@ -642,7 +806,7 @@ Based on the analysis of the Fitbit Fitness Tracker Data, several actionable str
 
 The analysis of the Fitbit Fitness Tracker Data has yielded several actionable insights that can inform Bellabeat's strategic decisions regarding product development and marketing. I've identified key patterns in physical activity, sleep, sedentary behavior and peak activity hours that can guide the creation of personalized user experiences and health-driven community engagement. 
 
-However, it is important to acknowledge the limitations of this analysis. The dataset used is relatively small and dated, as it represents a sample from 2016 and may not reflect current trends or the wider demographic Bellabeat targets. The absence of demographic information within the dataset limits the depth of our customer segmentation and the personalisation of insights. Additionally, the data is sourced from a third-party and may not fully represent the user engagement that Bellabeat's own products would elicit.
+However, it is important to acknowledge the limitations of this analysis. The dataset used is relatively small and dated, as it represents a sample from 2016 and may not reflect current trends or the wider demographic Bellabeat targets. The observed discrepancies in sleep data raise concerns about data quality, indicating potential inconsistencies in measurement methods or recording accuracy. The absence of demographic information within the dataset limits the depth of our customer segmentation and the personalisation of insights. Additionally, the data is sourced from a third-party and may not fully represent the user engagement that Bellabeat's own products would elicit.
 
 Despite these limitations, the strategic recommendations provided offer a foundation for Bellabeat to enhance its user engagement and product features. It is crucial for Bellabeat to continue investing in data collection and analysis, particularly gathering more current and comprehensive data that includes demographic details. This will enable Bellabeat to refine its strategies, ensuring they are based on accurate and representative insights. By continually adapting to the evolving needs and preferences of its users, Bellabeat can maintain a competitive edge in the health and wellness technology market.
 
